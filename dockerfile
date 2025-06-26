@@ -1,9 +1,13 @@
-# Use a lightweight base image
-FROM alpine:latest
-
-# Set the command to execute when the container starts
-CMD ["echo", "Hello, Docker World!"]
-
+FROM centos:7
+MAINTAINER Amal.Dev@catalyzrs.com
+RUN yum install -y httpd \
+ zip\
+ unzip
+ADD http://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip/var/www/html/
+WORKDIR /var/www/html/
+RUN unzip photogenic.zip
+RUN cp -rvf photogenic/* .
+RUN rm -rf photogenic photogenic.zip
+CMD ["/usr/sbin/httpd" , "-D", "FOREGROUND"]
 EXPOSE 80
-
 
